@@ -64,11 +64,10 @@ namespace GUI_Starter.classes
 
         public bool sendString(String Data)
         {
-            if (this.portname == null)
+            if (this.portname == null && this.Port_names.Length <= 0)
             {
-
                 return false;
-            }
+            }            
             if(connection == null)
             {
                 openConnection(this.portname);
@@ -87,8 +86,10 @@ namespace GUI_Starter.classes
 
             }
             byte[] sendData = Encoding.GetEncoding("UTF-8").GetBytes(Data.ToCharArray());
-            sendData[sendData.Length] = (byte) 13;// CR
-            sendData[sendData.Length] = (byte) 10;// LF
+            List<byte> tmp = sendData.ToList();
+            tmp.Add((byte) 13);// CR
+            tmp.Add((byte) 10);// LF
+            sendData = tmp.ToArray();
             try
             {
                 connection.Write(sendData, 0, sendData.Length);

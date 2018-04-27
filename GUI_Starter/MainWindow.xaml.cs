@@ -76,6 +76,7 @@ namespace GUI_Starter
                 if (result.Value == true)
                 {
                     String sets = (String) dialog.cb_ports.SelectedValue;
+                    Bringe.openConnection(sets);
                     Console.WriteLine(sets);
                 }
                 else
