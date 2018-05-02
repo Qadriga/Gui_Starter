@@ -5,24 +5,28 @@ using System.Text;
 using System.Threading.Tasks;
 
 using System.IO.Ports;
+using System.Threading;
 
 namespace GUI_Starter.classes
 {
 
-    public sealed class Com_Ports
+    public sealed class Com_Ports 
     {
         private static Com_Ports instance = null;
         private static readonly object threadLock = new object();
         private SerialPort connection = null;
         private string portname { get; set; } = null;
-        private Byte[] LastreadData { get; set; } 
+        private Byte[] LastreadData { get; set; }
 
 
         public event EventHandler DataReady;
-        public string [] Port_names {get;} // read only array of all port names
+        private Thread thread;
+        public string[] Port_names { get{
+            return SerialPort.GetPortNames();
+            } } // read only array of all port names
         Com_Ports()
         {
-            this.Port_names = SerialPort.GetPortNames();
+            this.thread = new Thread(new ThreadStart(this.run));
             Console.WriteLine("Found some Ports:");
             foreach(string port in this.Port_names)
             {
@@ -31,9 +35,16 @@ namespace GUI_Starter.classes
             this.portname = this.Port_names[0];
         }
 
-        
+        private void run()
+        {
 
+        }
+        
         public bool openConnection(String portname)
+        {
+            return _openConnection(portname);
+        }
+        private bool _openConnection(String portname)
         {
             SerialPort tmp = null;
             
@@ -110,8 +121,7 @@ namespace GUI_Starter.classes
                 {
                     if ( instance == null)
                     {
-                        instance = new Com_Ports();
-                        
+                        instance = new Com_Ports();                        
                     }
                     return instance;
                 }
