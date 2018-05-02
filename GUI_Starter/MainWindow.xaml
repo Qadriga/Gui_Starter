@@ -6,36 +6,54 @@
         xmlns:local="clr-namespace:GUI_Starter"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
-    
-        <DockPanel>
-            <Menu DockPanel.Dock="Top">
-                <MenuItem Header="_File">
-                    <MenuItem Header="_Open" Click="onOpenClick"/>                    
-                    <MenuItem Header="_Close" Click="close_Click"/>
 
-                </MenuItem>
+    <DockPanel>
+       
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Open" Click="onOpenClick"/>
+                <MenuItem Header="_Close" Click="close_Click"/>
+            </MenuItem>
             <MenuItem Header="_Port" Click="Port_Seclect_Click"/>
 
 
         </Menu>
-            <StackPanel>
-            <ListView Name="RaceList" MinHeight="150" Margin="10" >
-                <ListView.View>
-                    <GridView>
+
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <ListView Name="RaceList"  Grid.Row="0">
+                <ListView.View >
+                    <GridView >
                         <GridViewColumn Header="Index" DisplayMemberBinding="{Binding Index}"></GridViewColumn>
                         <GridViewColumn Header="Rennnummer" DisplayMemberBinding="{Binding RaceLabel}"></GridViewColumn>
                         <GridViewColumn Header="Abteilung" DisplayMemberBinding="{Binding Division}"></GridViewColumn>
                         
                     </GridView>
                 </ListView.View>
-
+            
             </ListView>
-            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                <TextBox HorizontalAlignment="Left" MinWidth="200" VerticalAlignment="Center" Name="Tb_SendString" Margin="10,10,10,10"></TextBox>
-                <Button Name="btn_send"  HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10,10,10,10" Click="onSendClick">Senden</Button>
-            </StackPanel>
-        </StackPanel>
-        </DockPanel>
+           
+            <Grid  Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBox Grid.Row="0" Grid.Column="0" Name="Tb_SendString" ></TextBox>
+                <Button Grid.Row="0" Grid.Column="1" Name="btn_del" Width="60" >Delete</Button>
+                <Button Grid.Row="0" Grid.Column="2" Name="btn_send" Click="onSendClick" Width="60" >Senden</Button>
+            </Grid>
+        </Grid>
+    </DockPanel>
+        
 
         
     
