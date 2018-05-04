@@ -66,7 +66,7 @@ namespace GUI_Starter.classes
         public bool sendSerial()
         {
             Com_Ports port = Com_Ports.Instance;           
-            if (port.sendString(csvString))
+            if (port.sendString(this.ToCSVString()))
             {
                 Console.WriteLine("Send Success");
                 return true;
@@ -76,6 +76,16 @@ namespace GUI_Starter.classes
                 Console.WriteLine("Send Failed");
             }
             return false;
+        }
+
+        public String ToCSVString()
+        {
+            String retstr = ""+ this.Index + "," + this.RaceLabel + "," + this.Division;
+            for(int i = 0; i < this.Lanes.Count; i++)
+            {
+                retstr += this.Lanes[i].toCSVString();
+            }
+            return retstr;
         }
     }
 }

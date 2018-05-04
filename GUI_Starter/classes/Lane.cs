@@ -18,5 +18,10 @@ namespace GUI_Starter.classes
             this.delay = time_delay;
             this.LaneNumber = Lane;
         }
+
+        public string toCSVString()
+        {
+            return "," + this.LaneNumber + "," + this.delay ;
+        }       
     }
 }

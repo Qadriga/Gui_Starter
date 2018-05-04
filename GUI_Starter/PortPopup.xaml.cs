@@ -29,7 +29,7 @@ namespace GUI_Starter
             {
                 cb_ports.Items.Add(port);
             }
-            cb_ports.SelectedIndex = 0;
+            cb_ports.SelectedIndex = ports.Port_names.ToList().IndexOf(ports.portname);
             
         }
         private void Select_Button_Click(object sender, RoutedEventArgs e)

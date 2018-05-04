@@ -15,7 +15,7 @@ namespace GUI_Starter.classes
         private static Com_Ports instance = null;
         private static readonly object threadLock = new object();
         private SerialPort connection = null;
-        private string portname { get; set; } = null;
+        public string portname { get; set; } = null;
         private Byte[] LastreadData { get; set; }
 
 

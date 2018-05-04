@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI_Starter"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Starter" Height="350" Width="525">
 
     <DockPanel>
        
@@ -37,18 +37,18 @@
             
             </ListView>
            
-            <Grid  Grid.Row="1">
+            <Grid  Grid.Row="1" Margin="10">
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <TextBox Grid.Row="0" Grid.Column="0" Name="Tb_SendString" ></TextBox>
-                <Button Grid.Row="0" Grid.Column="1" Name="btn_del" Width="60" >Delete</Button>
+                <Button Grid.Row="0" Grid.Column="1" Name="btn_del"  Click="OnDeleteClick"  Width="60" >Delete</Button>
                 <Button Grid.Row="0" Grid.Column="2" Name="btn_send" Click="onSendClick" Width="60" >Senden</Button>
             </Grid>
         </Grid>

@@ -137,5 +137,21 @@ namespace GUI_Starter
             Port.sendString(SendText);
             Console.WriteLine("btn_send Clicked");
         }
+        private void OnDeleteClick(object sender, RoutedEventArgs e)
+        {
+            
+
+            if (RaceList.SelectedItems.Count == 0) { 
+                return;
+            }
+           while(RaceList.SelectedIndex != -1)
+            {
+                RaceList.Items.RemoveAt(RaceList.SelectedIndex);
+            }
+            
+                
+
+        }
     }
+
 }
