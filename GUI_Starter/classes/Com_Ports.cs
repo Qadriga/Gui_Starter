@@ -9,7 +9,11 @@ using System.Threading;
 
 namespace GUI_Starter.classes
 {
+    public class HotPlugEventArgs : EventArgs
+    {
+        public String Message{ get; set; }
 
+    }
     public sealed class Com_Ports 
     {
         private static Com_Ports instance = null;
@@ -18,26 +22,46 @@ namespace GUI_Starter.classes
         public string portname { get; set; } = null;
         private Byte[] LastreadData { get; set; }
 
+        private Timer HotPlugTimer = null;
+        private int FoundPorts = 0;
 
         public event EventHandler DataReady;
-        private Thread thread;
+        public event EventHandler HotPlugEvent;
+        
         public string[] Port_names { get{
             return SerialPort.GetPortNames();
             } } // read only array of all port names
         Com_Ports()
         {
-            this.thread = new Thread(new ThreadStart(this.run));
+            
             Console.WriteLine("Found some Ports:");
             foreach(string port in this.Port_names)
             {
                 Console.WriteLine(port);
             }
             this.portname = this.Port_names[0];
+            AutoResetEvent ev = new AutoResetEvent(false);
+            this.HotPlugTimer = new Timer(this.HotPlugCheck,ev,0,5000);
         }
 
-        private void run()
+        private void HotPlugCheck(Object sender)
         {
+            Console.WriteLine("Check for new Ports");
+            String[] cp = SerialPort.GetPortNames();
+            if(cp.Length > this.FoundPorts)
+            {
+                HotPlugEventArgs ev = new HotPlugEventArgs();
+                ev.Message = "Port Added";
 
+                HotPlugEvent?.Invoke(this, ev);
+            }
+            else if (cp.Length < this.FoundPorts)
+            {
+                HotPlugEventArgs ev = new HotPlugEventArgs();
+                ev.Message = "Port Removed";
+                HotPlugEvent?.Invoke(this, ev);
+            }
+            this.FoundPorts = cp.Length;
         }
         
         public bool openConnection(String portname)
