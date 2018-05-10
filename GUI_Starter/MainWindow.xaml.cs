@@ -1,4 +1,5 @@
 ﻿using GUI_Starter.classes;
+using GUI_Starter.popups;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,7 @@ namespace GUI_Starter
             race_list = new List<Race>();
             Com_Ports port = Com_Ports.Instance;
             port.DataReady += port_DataCallback;
+            port.HotPlugEvent += port_HotPlugCallback;
         }
 
         private List<Race> race_list;
@@ -38,6 +40,29 @@ namespace GUI_Starter
         {
             Console.WriteLine("Hello World");
         }
+
+        private void port_HotPlugCallback(object sender, EventArgs e)
+        {
+            HotPlugEventArgs hotPlugEventArgs = null;
+            try
+            {
+                hotPlugEventArgs = (HotPlugEventArgs)e;
+            }
+            catch (InvalidCastException ex)
+            {
+                Console.WriteLine(ex.Message);
+                return;
+            }
+            /* this is nesecarry because ui changes have to run in main thread */
+            Application.Current.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => {
+                NewPort newPort = new NewPort();
+                newPort.SetMessageText(hotPlugEventArgs.Message);
+                newPort.Show();
+            }));
+            
+            
+        }
+        
 
         private void createFromFile(String FilePath)
         {
